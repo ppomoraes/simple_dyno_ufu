@@ -1,5 +1,6 @@
 # simple_dyno_ufu
-Simplest software possible for an inertial chassis dyno at UFU.
+Simplest software possible for an inertial chassis dyno at UFU,
+with an arduino based data aquisition system.
 
 Dyno rollers have 40 teeth, polar moment of inertia is 105 kg*m².
 
