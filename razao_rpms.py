@@ -16,11 +16,11 @@ def chauvenet(data):
     naoexclui = probs >= criterion
     return data[naoexclui]
 
-data_file = './resultados/teste_dino_ufu_2025-04-17-16:48:35.csv'
-vel_motor = 2000 #rpm
+data_file = './resultados/teste_dino_ufu_2025-07-07-17:22:07.csv'
+vel_motor = 1019 #rpm
 num_dentes = 40
 d_rolo = 790/1000 #metros
-
+# fazer a 2 mil rpm
 # Ler arquivo, separar por vírgula e converter str em int
 with open(data_file, 'r') as file:
     data = file.read()
@@ -36,6 +36,7 @@ razao = vel_motor*num_dentes*media/60
 print(f'Razão velocidade do motor/velocidade do dino = {razao}')
 
 
+print((5.018892735312698+5.01822267494824)/2)
 '''Temperature = 29.23 *C
 16:31:28.769 -> Pressure = 91.65 kPa
 16:31:28.769 -> Humidity = 57.57 %

@@ -1,7 +1,7 @@
-import serial
 import numpy as np
 import keyboard
 from datetime import datetime
+import serial
 
 ##########################################
 # Esse código deve ser rodado dentro de um ambiente virtual com privilégios de SUDO:
