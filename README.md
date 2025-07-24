@@ -6,6 +6,25 @@ Dyno rollers have 40 teeth, polar moment of inertia is 105 kg*m².
 
 4th gear on my e36 results in a rpm ratio 5.0185
 
+## To use
+Set up a virtual environment with Python 3.10 and install requirements.txt.
+```bash
+#Create and activate the virtual environment
+python3.10.12 -m venv .venv
+# On macOS/Linux:
+source .venv/bin/activate
+# On Windows (Command Prompt):
+# .venv\Scripts\activate.bat
+# On Windows (PowerShell):
+# .venv\Scripts\Activate.ps1
+
+# Install  dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+Run `dyno_pull.py` with sudo privilege to access serial ports.
+
+
 # Improvements Due:
 
 ## dt oscilations
