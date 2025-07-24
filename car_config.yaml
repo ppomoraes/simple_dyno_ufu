@@ -1,0 +1,9 @@
+# Car configuration file
+# filled automatically by set_car_config.py
+
+owner: 'name'
+model: 'make and model'
+spec: 'modifications' # what state of mods the car is in for future reference and comparison.
+gear: 4
+gear ratio: 5.018 # calculated during car config script test
+id: 1719 # unique for every new setup (different car, mods or gear ratio)
