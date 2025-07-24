@@ -93,7 +93,7 @@ for idx in range(1,len(dt_list)):
  #               signal.savgol_filter(potencia_list[1],window_length=1000,polyorder=3),
   #             signal.savgol_filter(potencia_list[2],window_length=1000,polyorder=3)]
 
-potencia_list[1] = [pot/736 for pot in potencia_list[1]] # converter de Watt para Cavalo
+potencia_list[1] = [pot/735.5 for pot in potencia_list[1]] # converter de Watt para Cavalo
 
 potencia_list[0] = list(potencia_list[0])
 potencia_list[1] = list(potencia_list[1])

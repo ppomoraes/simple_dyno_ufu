@@ -2,9 +2,8 @@ import matplotlib.pyplot as plt
 from typing import List
 import numpy as np
 import scipy.stats as stats
-import pandas as pd
 
-data_file = './resultados/teste_dino_ufu_2025-04-17-16:48:53.csv'
+data_file = './resultados/teste_dino_ufu_2025-06-23-20:45:31_e36_original_3.csv'
 m_inercia = 36.2 #kg*m²
 num_dentes = 40
 rad_dente = 2*3.1416/num_dentes # quantos radianos entre cada dente
