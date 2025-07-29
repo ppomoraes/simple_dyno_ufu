@@ -1,0 +1,23 @@
+# Manually filled general configuration.
+
+# Correction factor for atmospheric conditions.
+sae_j1349: True # True/False
+
+# Units
+power_unit: 'cv' # cv/kW
+torque_unit: 'nm' # nm/kgfm
+
+rpm_test: 2000 # Rpm for rpm ratio test
+
+# Advanced analysis settings
+smoothing_factor: 1000
+num_teeth: 40 # Number of teeth in the roller
+mom_inertia: 105 # Moment of inertia of roller in kg*m²
+
+# Serial com
+port: '/dev/ttyACM0'  # Serial port connected to Arduino
+baud_rate: 115200  # Must match Arduino setting
+
+# Paths
+car_config_path: './car_config.yaml'
+results_folder: './resultados/'
