@@ -10,6 +10,9 @@ data_file = './resultados/teste_dino_ufu_2025-06-23-20:44:49_e36_original_2.csv'
 #data_file = './resultados/teste_dino_ufu_2025-06-23-20:06:53e36 4 - com viscosa.csv' #- 204
 #data_file = './resultados/teste_dino_ufu_2025-06-23-20:21:07 - sem viscosa.csv' # - 214
 
+#data_file = './resultados/teste_dino_ufu_2025-07-07-17:20:42.csv' # 358,67 rolo rpm constante
+#data_file = './resultados/teste_dino_ufu_2025-07-07-17:22:07.csv' # 203,05 rolo rpm constante
+
 #m_inercia = 121.107 #kg*m²
 m_inercia = 105 #kg*m²
 num_dentes = 40
@@ -53,16 +56,32 @@ with open(data_file, 'r') as file:
     data = file.read()
 data = data.split(',')
 data = [ int(x) for x in data if x ] # diferença de tempo entre cada dente e o anterior em micro segundos
-data = np.array(data)
+
+dt_list = data
+# Delete every data point that is not just before the delay or one of its multiples so it mimicks the better solution
+aq_delay = 25000 # 25 ms
+dt_timestamp_list = []
+filtered_dt_list = []
+timestamp_sum = 0
+last_timestamp = 0
+
+for i in range(len(dt_list)):
+    last_timestamp=timestamp_sum
+    timestamp_sum+=dt_list[i]
+    if int(last_timestamp/aq_delay)!=int(timestamp_sum/aq_delay):
+        dt_timestamp_list.append((dt_list[i-1],last_timestamp))
+        filtered_dt_list.append(dt_list[i-1])
+
+data = np.array(filtered_dt_list)
 
 # Data pre-processing
 print(len(data))
 data = chauvenet(data)
 print(len(data))
-data=data[:-200] # remove last 200 items
-data = signal.savgol_filter(data,window_length=800,polyorder=3)
+#data=data[:-20]
+data = signal.savgol_filter(data,window_length=65,polyorder=3)
 x=[n for n in range(len(data))]
-c = np.polyfit(x,data,8)
+c = np.polyfit(x,data,16)
 y = np.polyval(c,x)
 #data = y
 
@@ -75,7 +94,7 @@ rpm_list = [w*30*razao_rpms/3.1416 for w in w_list]
 #            rpm,potencia,torque
 potencia_list = [[],[],[]] # em Watts
 for idx in range(1,len(dt_list)):
-    dt_med = ((dt_list[idx]+dt_list[idx-1])/2) # dt médio entre esse ponto e o anterior
+    dt_med = 0.025 # (dt_timestamp_list[idx][1]-dt_timestamp_list[idx-1][1])/1000000
     w_med = ((w_list[idx]+w_list[idx-1])/2)
     potencia_list[0].append((rpm_list[idx]+rpm_list[idx-1])/2) #append rpm media
     Potencia_Vis = 0#0.0004 * (w_med** 3)
@@ -84,9 +103,9 @@ for idx in range(1,len(dt_list)):
     potencia_list[1].append(potencia_total)
     potencia_list[2].append(potencia_total/(w_med*razao_rpms))
 
-potencia_list = [signal.savgol_filter(potencia_list[0],window_length=600,polyorder=3),
-                 signal.savgol_filter(potencia_list[1],window_length=600,polyorder=3),
-                 signal.savgol_filter(potencia_list[2],window_length=600,polyorder=3)]
+potencia_list = [signal.savgol_filter(potencia_list[0],window_length=95,polyorder=3),
+                 signal.savgol_filter(potencia_list[1],window_length=95,polyorder=3),
+                 signal.savgol_filter(potencia_list[2],window_length=95,polyorder=3)]
 
 potencia_list[1] = [pot/735.5 for pot in potencia_list[1]] # converter de Watt para Cavalo
 
@@ -108,7 +127,7 @@ print(f'Máxima potência gerada: {int(max_pot)} cavalos, a {int(max_pot_rpm)} r
 print(f'Máximo torque gerado: {int(max_torque)} nm, a {int(max_torque_rpm)} rpm.\n')
 print('#'*50)
 
-'''
+
 # Line plot of dt
 plt.plot(x,data, color='red', linewidth=2)
 
@@ -121,12 +140,12 @@ plt.grid(True)
 
 # Display plot
 plt.show()
-'''
+
 '''
 ## plot power and torque curves
 # Line plot
 plt.plot(potencia_list[0],potencia_list[1], color='red', linewidth=2)
-
+    print(dt_med)
 # y axis limit
 plt.ylim(0, max(potencia_list[1])*1.15)
 

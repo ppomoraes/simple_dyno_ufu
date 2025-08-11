@@ -5,7 +5,8 @@ import scipy.stats as stats
 import scipy.signal as signal
 
 data_file = './resultados/teste_dino_ufu_2025-07-07-17:20:42.csv' # 358,67 rolo rpm constante
-#data_file = './resultados/teste_dino_ufu_2025-07-07-17:22:07.csv' # 203,05 rolo rpm constante
+data_file = './resultados/teste_dino_ufu_2025-07-07-17:22:07.csv' # 203,05 rolo rpm constante
+#data_file = './resultados/teste_dino_ufu_2025-06-23-20:44:49_e36_original_2.csv' # - 206
 
 num_dentes = 40
 rad_dente = 2*3.1416/num_dentes # quantos radianos entre cada dente
@@ -21,7 +22,8 @@ data = np.array(data)
 
 # Data pre-processing
 print(len(data))
-data=data[340:370]
+data=data[100:130]
+x=[n for n in range(len(data))]
 #data = signal.savgol_filter(data,window_length=1000,polyorder=3)
 
 # Create secondary lists
