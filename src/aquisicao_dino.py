@@ -1,4 +1,3 @@
-import numpy as np
 import keyboard
 from datetime import datetime
 import serial

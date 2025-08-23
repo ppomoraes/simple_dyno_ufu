@@ -10,6 +10,8 @@ data_file = './resultados/teste_dino_ufu_2025-06-23-20:44:49_e36_original_2.csv'
 #data_file = './resultados/teste_dino_ufu_2025-06-23-20:06:53e36 4 - com viscosa.csv' #- 204
 #data_file = './resultados/teste_dino_ufu_2025-06-23-20:21:07 - sem viscosa.csv' # - 214
 
+data_file = './resultados/teste_dino_ufu_2025-08-23-11:23:25.csv' # -
+
 #m_inercia = 121.107 #kg*m²
 m_inercia = 105 #kg*m²
 num_dentes = 40
@@ -60,9 +62,9 @@ print(len(data))
 data = chauvenet(data)
 print(len(data))
 data=data[:-200] # remove last 200 items
-data = signal.savgol_filter(data,window_length=800,polyorder=3)
+data = signal.savgol_filter(data,window_length=1200,polyorder=3)
 x=[n for n in range(len(data))]
-c = np.polyfit(x,data,8)
+c = np.polyfit(x,data,10)
 y = np.polyval(c,x)
 #data = y
 
@@ -84,9 +86,9 @@ for idx in range(1,len(dt_list)):
     potencia_list[1].append(potencia_total)
     potencia_list[2].append(potencia_total/(w_med*razao_rpms))
 
-potencia_list = [signal.savgol_filter(potencia_list[0],window_length=600,polyorder=3),
-                 signal.savgol_filter(potencia_list[1],window_length=600,polyorder=3),
-                 signal.savgol_filter(potencia_list[2],window_length=600,polyorder=3)]
+#potencia_list = [signal.savgol_filter(potencia_list[0],window_length=900,polyorder=3),
+ #                signal.savgol_filter(potencia_list[1],window_length=900,polyorder=3),
+  #               signal.savgol_filter(potencia_list[2],window_length=900,polyorder=3)]
 
 potencia_list[1] = [pot/735.5 for pot in potencia_list[1]] # converter de Watt para Cavalo
 
@@ -108,7 +110,7 @@ print(f'Máxima potência gerada: {int(max_pot)} cavalos, a {int(max_pot_rpm)} r
 print(f'Máximo torque gerado: {int(max_torque)} nm, a {int(max_torque_rpm)} rpm.\n')
 print('#'*50)
 
-'''
+
 # Line plot of dt
 plt.plot(x,data, color='red', linewidth=2)
 
@@ -121,7 +123,7 @@ plt.grid(True)
 
 # Display plot
 plt.show()
-'''
+
 '''
 ## plot power and torque curves
 # Line plot
